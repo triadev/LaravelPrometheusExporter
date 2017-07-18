@@ -1,4 +1,5 @@
-me": "triadev/laravel-prometheus-exporter",
+{  
+  "name": "triadev/laravel-prometheus-exporter",
   "description": "A laravel service provider to export metrics.",
   "keywords": ["Laravel", "Prometheus", "Metrics"],
   "license": "MIT",
