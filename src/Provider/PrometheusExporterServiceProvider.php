@@ -3,7 +3,9 @@ namespace Triadev\PrometheusExporter\Provider;
 
 use Illuminate\Support\ServiceProvider;
 use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
-use Triadev\PrometheusExporter\PrometheusExporter;
+use Prometheus\Storage\Redis;
+use Prometheus\Storage\APC;
+use Prometheus\Storage\Adapter;
 
 /**
  * Class PrometheusExporterServiceProvider
@@ -37,9 +39,20 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(PrometheusExporterContract::class, function () {
-            return new PrometheusExporter();
-        });
+        $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'prometheus-exporter');
+
+        switch (config('prometheus-exporter.adapter')) {
+            case 'apc':
+                $this->app->bind(Adapter::class, APC::class);
+                break;
+            case 'redis':
+                $this->app->bind(Adapter::class, function () {
+                    return new Redis(config('prometheus-exporter.redis'));
+                });
+                break;
+            default:
+                throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
+        }
     }
 
     /**

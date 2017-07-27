@@ -24,6 +24,13 @@ Register the service provider in the config/app.php (Laravel) or in the bootstra
 ]
 ```
 
+Add the facade in the config/app.php:
+```
+'aliases' => [
+    'PrometheusExporter' => \Triadev\PrometheusExporter\Facade\PrometheusExporterFacade::class
+]
+```
+
 Once installed you can now publish your config file and set your correct configuration for using the package.
 ```php
 php artisan vendor:publish --provider="Triadev\PrometheusExporter\Provider\PrometheusExporterServiceProvider" --tag="config"
@@ -53,7 +60,7 @@ Alternatively, fork the project and make a pull request. :)
 - [Christopher Lorke](mailto:christopher.lorke@gmx.de)
 
 ### License
-The code for LaravelLoggerProvider is distributed under the terms of the MIT license (see [LICENSE](LICENSE)).
+The code for LaravelPrometheusExporter is distributed under the terms of the MIT license (see [LICENSE](LICENSE)).
 
 [ico-license]: https://img.shields.io/github/license/triadev/LaravelPrometheusExporter.svg?style=flat-square
 [ico-version-stable]: https://img.shields.io/packagist/v/triadev/laravel-prometheus-exporter.svg?style=flat-square
