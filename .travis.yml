@@ -5,4 +5,4 @@ php:
 install:
   composer install --no-interaction
 script:
-  phpunit --group=PrometheusExporter
+  phpunit --group=PrometheusExporter --configuration phpunit.xml
