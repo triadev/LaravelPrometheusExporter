@@ -4,7 +4,7 @@ namespace Triadev\PrometheusExporter\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Prometheus\RenderTextFormat;
-use PrometheusExporter;
+use Triadev\PrometheusExporter\PrometheusExporter;
 
 /**
  * Class PrometheusExporterController
@@ -14,6 +14,21 @@ use PrometheusExporter;
  */
 class PrometheusExporterController extends Controller
 {
+    /**
+     * @var PrometheusExporter
+     */
+    protected $prometheusExporter;
+
+    /**
+     * PrometheusExporterController constructor.
+     *
+     * @param PrometheusExporter $prometheusExporter
+     */
+    public function __construct(PrometheusExporter $prometheusExporter)
+    {
+        $this->prometheusExporter = $prometheusExporter;
+    }
+
     /**
      * metrics
      *
@@ -25,7 +40,7 @@ class PrometheusExporterController extends Controller
     {
         $renderer = new RenderTextFormat();
 
-        return response($renderer->render(PrometheusExporter::getMetricFamilySamples()))
+        return response($renderer->render($this->prometheusExporter->getMetricFamilySamples()))
             ->header('Content-Type', $renderer::MIME_TYPE);
     }
 }
