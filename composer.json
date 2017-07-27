@@ -23,7 +23,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": []
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     }
 }
 
