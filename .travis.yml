@@ -5,9 +5,9 @@ php:
 install:
     composer install --no-interaction
 before_script:
-    - pecl install -y apcu apcu_bc-beta
+    - yes | pecl install apcu apcu_bc-beta
     - echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 script:
-    - phpunit --group=PrometheusExporter --configuration phpunit.xml
+    phpunit
