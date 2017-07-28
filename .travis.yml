@@ -6,6 +6,7 @@ install:
   composer install --no-interaction
 before_script:
   - pecl install apcu apcu_bc-beta
+  - cat /usr/local/etc/php/php.ini
   - echo "extension=apcu.so" >> /usr/local/etc/php/php.ini
   - echo "extension=apc.so" >> /usr/local/etc/php/php.ini
   - echo "apc.enable_cli=1" >> /usr/local/etc/php/php.ini
