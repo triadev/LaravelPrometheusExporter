@@ -5,6 +5,7 @@ php:
 install:
     composer install --no-interaction
 before_script:
-    phpenv config-add php.ini
+    - pecl install apcu apcu_bc-beta
+    - phpenv config-add php.ini
 script:
-    phpunit --group=PrometheusExporter --configuration phpunit.xml
+    - phpunit --group=PrometheusExporter --configuration phpunit.xml
