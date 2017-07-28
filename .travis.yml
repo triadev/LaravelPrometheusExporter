@@ -6,12 +6,8 @@ install:
     composer install --no-interaction
 before_script:
     - yes | pecl install apcu apcu_bc-beta
-    - echo "extension = apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-    - wget https://phar.phpunit.de/phpunit-5.7.9.phar
-    - chmod +x phpunit-5.7.9.phar
-    - sudo mv phpunit-5.7.9.phar /usr/local/bin/phpunit
-    - /usr/local/bin/phpunit --version
 script:
-    /usr/local/bin/phpunit
+    ./vendor/bin/phpunit --group=PrometheusExporter
