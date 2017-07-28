@@ -11,7 +11,7 @@ before_script:
     - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - wget https://phar.phpunit.de/phpunit-5.7.9.phar
     - chmod +x phpunit-5.7.9.phar
-    - mv phpunit-5.7.9.phar /usr/local/bin/phpunit
+    - sudo mv phpunit-5.7.9.phar /usr/local/bin/phpunit
     - phpunit --version
 script:
     phpunit
