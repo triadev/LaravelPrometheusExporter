@@ -2,12 +2,8 @@
 namespace Triadev\PrometheusExporter\Tests\Controller;
 
 use Illuminate\Http\Response;
-use Prometheus\CollectorRegistry;
 use Prometheus\RenderTextFormat;
-use Tests\TestCase;
-use Triadev\PrometheusExporter\Controller\PrometheusExporterController;
-use Triadev\PrometheusExporter\PrometheusExporter;
-use Prometheus\Storage\Adapter;
+use Triadev\PrometheusExporter\Tests\PrometheusExporterTestHelper;
 
 /**
  * Class PrometheusExporterControllerTest
@@ -15,21 +11,17 @@ use Prometheus\Storage\Adapter;
  * @author Christopher Lorke <christopher.lorke@gmx.de>
  * @package Triadev\PrometheusExporter\Tests\Controller
  */
-class PrometheusExporterControllerTest extends TestCase
+class PrometheusExporterControllerTest extends \PHPUnit_Framework_TestCase
 {
+    use PrometheusExporterTestHelper;
+
     /**
      * @test
      * @group PrometheusExporter
      */
     public function it_shows_the_metrics_response()
     {
-        $prometheusExporterController = new PrometheusExporterController(
-            new PrometheusExporter(
-                new CollectorRegistry(
-                    $this->app->make(Adapter::class)
-                )
-            )
-        );
+        $prometheusExporterController = $this->buildPrometheusExporterController();
 
         $response = $prometheusExporterController->metrics();
 

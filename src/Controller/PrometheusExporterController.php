@@ -40,7 +40,8 @@ class PrometheusExporterController extends Controller
     {
         $renderer = new RenderTextFormat();
 
-        return response($renderer->render($this->prometheusExporter->getMetricFamilySamples()))
-            ->header('Content-Type', $renderer::MIME_TYPE);
+        return Response::create(
+            $renderer->render($this->prometheusExporter->getMetricFamilySamples())
+        )->header('Content-Type', RenderTextFormat::MIME_TYPE);
     }
 }

@@ -21,11 +21,6 @@
         "psr-4": {
             "Triadev\\PrometheusExporter\\": "src/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
     }
 }
 

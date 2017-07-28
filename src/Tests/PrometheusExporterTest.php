@@ -2,11 +2,6 @@
 namespace Triadev\PrometheusExporter\Tests;
 
 use Illuminate\Http\Response;
-use Prometheus\CollectorRegistry;
-use Prometheus\Storage\Adapter;
-use Tests\TestCase;
-use Triadev\PrometheusExporter\Controller\PrometheusExporterController;
-use Triadev\PrometheusExporter\PrometheusExporter;
 
 /**
  * Class PrometheusExporterTest
@@ -14,33 +9,9 @@ use Triadev\PrometheusExporter\PrometheusExporter;
  * @author Christopher Lorke <christopher.lorke@gmx.de>
  * @package Triadev\PrometheusExporter\Tests
  */
-class PrometheusExporterTest extends TestCase
+class PrometheusExporterTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Build prometheus exporter
-     *
-     * @return PrometheusExporter
-     */
-    private function buildPrometheusExporter() : PrometheusExporter
-    {
-        return new PrometheusExporter(
-            new CollectorRegistry(
-                $this->app->make(Adapter::class)
-            )
-        );
-    }
-
-    /**
-     * Build prometheus exporter controller
-     *
-     * @return PrometheusExporterController
-     */
-    private function buildPrometheusExporterController() : PrometheusExporterController
-    {
-        return new PrometheusExporterController(
-            $this->buildPrometheusExporter()
-        );
-    }
+    use PrometheusExporterTestHelper;
 
     /**
      * @test

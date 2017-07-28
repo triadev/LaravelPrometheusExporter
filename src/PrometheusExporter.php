@@ -5,6 +5,8 @@ use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 use Prometheus\CollectorRegistry;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Exception\MetricNotFoundException;
+use Illuminate\Support\Facades\Config;
+use Triadev\PrometheusExporter\Repository\ConfigRepository;
 
 /**
  * Class PrometheusExporter
@@ -50,7 +52,7 @@ class PrometheusExporter implements PrometheusExporterContract
     public function incCounter($name, $help, $namespace = null, array $labels = [], array $data = [])
     {
         if (!$namespace) {
-            $namespace = config('prometheus-exporter.namespace');
+            $namespace = (new ConfigRepository())->getConfig()['namespace'];
         }
 
         try {
@@ -75,7 +77,7 @@ class PrometheusExporter implements PrometheusExporterContract
     public function incByCounter($name, $help, $value, $namespace = null, array $labels = [], array $data = [])
     {
         if (!$namespace) {
-            $namespace = config('prometheus-exporter.namespace');
+            $namespace = (new ConfigRepository())->getConfig()['namespace'];
         }
 
         try {
@@ -99,7 +101,7 @@ class PrometheusExporter implements PrometheusExporterContract
     public function setGauge($name, $help, $value, $namespace = null, array $labels = [])
     {
         if (!$namespace) {
-            $namespace = config('prometheus-exporter.namespace');
+            $namespace = (new ConfigRepository())->getConfig()['namespace'];
         }
 
         try {
