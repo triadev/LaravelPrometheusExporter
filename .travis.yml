@@ -12,6 +12,6 @@ before_script:
     - wget https://phar.phpunit.de/phpunit-5.7.9.phar
     - chmod +x phpunit-5.7.9.phar
     - sudo mv phpunit-5.7.9.phar /usr/local/bin/phpunit
-    - phpunit --version
+    - /usr/local/bin/phpunit --version
 script:
-    phpunit
+    /usr/local/bin/phpunit
