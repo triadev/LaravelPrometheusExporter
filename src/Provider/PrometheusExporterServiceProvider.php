@@ -30,8 +30,9 @@ class PrometheusExporterServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom($source, 'prometheus-exporter');
 
-        // Routes
-        $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
+        if (class_exists('Illuminate\Foundation\Application', false)) {
+            $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
+        }
     }
 
     /**

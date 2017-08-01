@@ -5,7 +5,7 @@
 [![Monthly installs][ico-downloads-monthly]][link-downloads]
 [![Travis][ico-travis]][link-travis]
 
-A laravel service provider to export metrics for prometheus.
+A laravel and lumen service provider to export metrics for prometheus.
 
 ## Main features
 - Metrics
@@ -24,11 +24,18 @@ Register the service provider in the config/app.php (Laravel) or in the bootstra
 ]
 ```
 
-Add the facade in the config/app.php:
+Add the facade in the config/app.php (Laravel):
 ```
 'aliases' => [
     'PrometheusExporter' => \Triadev\PrometheusExporter\Facade\PrometheusExporterFacade::class
 ]
+```
+
+Add the facade in the bootstrap/app.php (Lumen):
+```
+if (!class_exists('PrometheusExporter')) {
+    class_alias(\Triadev\PrometheusExporter\Facade\PrometheusExporterFacade::class, 'PrometheusExporter');
+}
 ```
 
 Once installed you can now publish your config file and set your correct configuration for using the package.
