@@ -38,6 +38,14 @@ if (!class_exists('PrometheusExporter')) {
 }
 ```
 
+Add the endpoint in the routes/web.php (Lumen):
+```
+$app->get(
+    'triadev/pe/metrics',
+    \Triadev\PrometheusExporter\Controller\PrometheusExporterController::class . '@metrics'
+);
+```
+
 Once installed you can now publish your config file and set your correct configuration for using the package.
 ```php
 php artisan vendor:publish --provider="Triadev\PrometheusExporter\Provider\PrometheusExporterServiceProvider" --tag="config"
