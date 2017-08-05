@@ -152,6 +152,7 @@ class PrometheusExporterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
      * @group PrometheusExporter
      */
     public function it_test_to_set_a_histogram()

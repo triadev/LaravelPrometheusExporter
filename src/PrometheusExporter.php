@@ -123,7 +123,7 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param array $labels
      * @param array|null $buckets
      */
-    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], ?array $buckets = null)
+    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], array $buckets = null)
     {
         if (!$namespace) {
             $namespace = (new ConfigRepository())->getConfig()['namespace'];
