@@ -64,4 +64,16 @@ interface PrometheusExporterContract
      * @param array $labels
      */
     public function setGauge($name, $help, $value, $namespace = null, array $labels = []);
+
+    /**
+     * Set histogram
+     *
+     * @param string $name
+     * @param string $help
+     * @param float $value
+     * @param null|string $namespace
+     * @param array $labels
+     * @param array|null $buckets
+     */
+    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], ?array $buckets = null);
 }

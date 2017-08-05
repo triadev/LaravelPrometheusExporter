@@ -150,4 +150,50 @@ class PrometheusExporterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertGreaterThan($metric_before, $metric_after);
     }
+
+    /**
+     * @group PrometheusExporter
+     */
+    public function it_test_to_set_a_histogram()
+    {
+        $prometheusExporterController = $this->buildPrometheusExporterController();
+
+        $prometheusExporter = $this->buildPrometheusExporter();
+        $prometheusExporter->setHistogram(
+            'phpunit_setHistogram',
+            '',
+            1
+        );
+
+        $response_before = $prometheusExporterController->metrics();
+
+        $this->assertInstanceOf(Response::class, $response_before);
+        $this->assertEquals(200, $response_before->getStatusCode());
+
+        if (preg_match('/app_phpunit_setHistogram_sum (?<metric>[0-9]+)/', $response_before->getContent(), $matches)) {
+            $metric_before = $matches['metric'];
+        } else {
+            throw new \Exception();
+        }
+
+        $prometheusExporter = $this->buildPrometheusExporter();
+        $prometheusExporter->setHistogram(
+            'phpunit_setHistogram',
+            '',
+            1
+        );
+
+        $response_after = $prometheusExporterController->metrics();
+
+        $this->assertInstanceOf(Response::class, $response_after);
+        $this->assertEquals(200, $response_after->getStatusCode());
+
+        if (preg_match('/app_phpunit_setHistogram_sum (?<metric>[0-9]+)/', $response_after->getContent(), $matches)) {
+            $metric_after = $matches['metric'];
+        } else {
+            throw new \Exception();
+        }
+
+        $this->assertGreaterThan($metric_before, $metric_after);
+    }
 }

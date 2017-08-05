@@ -112,4 +112,29 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $gauge->set($value, $labels);
     }
+
+    /**
+     * Set histogram
+     *
+     * @param string $name
+     * @param string $help
+     * @param float $value
+     * @param null|string $namespace
+     * @param array $labels
+     * @param array|null $buckets
+     */
+    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], ?array $buckets = null)
+    {
+        if (!$namespace) {
+            $namespace = (new ConfigRepository())->getConfig()['namespace'];
+        }
+
+        try {
+            $histogram = $this->registry->getHistogram($namespace, $name);
+        } catch (MetricNotFoundException $e) {
+            $histogram = $this->registry->registerHistogram($namespace, $name, $help, $labels, $buckets);
+        }
+
+        $histogram->observe($value, $labels);
+    }
 }
