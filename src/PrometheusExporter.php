@@ -46,10 +46,10 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string $name
      * @param string $help
      * @param string|null $namespace
-     * @param array $labels
-     * @param array $data
+     * @param array $labelKeys
+     * @param array $labelValues
      */
-    public function incCounter($name, $help, $namespace = null, array $labels = [], array $data = [])
+    public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
         if (!$namespace) {
             $namespace = (new ConfigRepository())->getConfig()['namespace'];
@@ -58,10 +58,10 @@ class PrometheusExporter implements PrometheusExporterContract
         try {
             $counter = $this->registry->getCounter($namespace, $name);
         } catch (MetricNotFoundException $e) {
-            $counter = $this->registry->registerCounter($namespace, $name, $help, $labels);
+            $counter = $this->registry->registerCounter($namespace, $name, $help, $labelKeys);
         }
 
-        $counter->inc($data);
+        $counter->inc($labelValues);
     }
 
     /**
@@ -69,13 +69,19 @@ class PrometheusExporter implements PrometheusExporterContract
      *
      * @param string $name
      * @param string $help
-     * @param string|null $namespace
-     * @param array $labels
      * @param float $value
-     * @param array $data
+     * @param string|null $namespace
+     * @param array $labelKeys
+     * @param array $labelValues
      */
-    public function incByCounter($name, $help, $value, $namespace = null, array $labels = [], array $data = [])
-    {
+    public function incByCounter(
+        $name,
+        $help,
+        $value,
+        $namespace = null,
+        array $labelKeys = [],
+        array $labelValues = []
+    ) {
         if (!$namespace) {
             $namespace = (new ConfigRepository())->getConfig()['namespace'];
         }
@@ -83,10 +89,10 @@ class PrometheusExporter implements PrometheusExporterContract
         try {
             $counter = $this->registry->getCounter($namespace, $name);
         } catch (MetricNotFoundException $e) {
-            $counter = $this->registry->registerCounter($namespace, $name, $help, $labels);
+            $counter = $this->registry->registerCounter($namespace, $name, $help, $labelKeys);
         }
 
-        $counter->incBy($value, $data);
+        $counter->incBy($value, $labelValues);
     }
 
     /**
@@ -96,9 +102,10 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string $help
      * @param int $value
      * @param null|string $namespace
-     * @param array $labels
+     * @param array $labelKeys
+     * @param array $labelValues
      */
-    public function setGauge($name, $help, $value, $namespace = null, array $labels = [])
+    public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
         if (!$namespace) {
             $namespace = (new ConfigRepository())->getConfig()['namespace'];
@@ -107,10 +114,10 @@ class PrometheusExporter implements PrometheusExporterContract
         try {
             $gauge = $this->registry->getGauge($namespace, $name);
         } catch (MetricNotFoundException $e) {
-            $gauge = $this->registry->registerGauge($namespace, $name, $help, $labels);
+            $gauge = $this->registry->registerGauge($namespace, $name, $help, $labelKeys);
         }
 
-        $gauge->set($value, $labels);
+        $gauge->set($value, $labelValues);
     }
 
     /**
@@ -120,11 +127,19 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string $help
      * @param float $value
      * @param null|string $namespace
-     * @param array $labels
+     * @param array $labelKeys
+     * @param array $labelValues
      * @param array|null $buckets
      */
-    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], array $buckets = null)
-    {
+    public function setHistogram(
+        $name,
+        $help,
+        $value,
+        $namespace = null,
+        array $labelKeys = [],
+        array $labelValues = [],
+        array $buckets = null
+    ) {
         if (!$namespace) {
             $namespace = (new ConfigRepository())->getConfig()['namespace'];
         }
@@ -132,9 +147,9 @@ class PrometheusExporter implements PrometheusExporterContract
         try {
             $histogram = $this->registry->getHistogram($namespace, $name);
         } catch (MetricNotFoundException $e) {
-            $histogram = $this->registry->registerHistogram($namespace, $name, $help, $labels, $buckets);
+            $histogram = $this->registry->registerHistogram($namespace, $name, $help, $labelKeys, $buckets);
         }
 
-        $histogram->observe($value, $labels);
+        $histogram->observe($value, $labelValues);
     }
 }

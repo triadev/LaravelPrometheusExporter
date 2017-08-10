@@ -19,39 +19,33 @@ interface PrometheusExporterContract
     public function getMetricFamilySamples();
 
     /**
-     * incCounter
+     * inc
      *
      * @param string $name
      * @param string $help
      * @param string|null $namespace
-     * @param array $labels
-     * @param array $data
+     * @param array $labelKeys
+     * @param array $labelValues
      */
-    public function incCounter(
-        $name,
-        $help,
-        $namespace = null,
-        array $labels = [],
-        array $data = []
-    );
+    public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = []);
 
     /**
-     * incByCounter
+     * incBy
      *
      * @param string $name
      * @param string $help
      * @param float $value
      * @param string|null $namespace
-     * @param array $labels
-     * @param array $data
+     * @param array $labelKeys
+     * @param array $labelValues
      */
     public function incByCounter(
         $name,
         $help,
         $value,
         $namespace = null,
-        array $labels = [],
-        array $data = []
+        array $labelKeys = [],
+        array $labelValues = []
     );
 
     /**
@@ -61,9 +55,10 @@ interface PrometheusExporterContract
      * @param string $help
      * @param int $value
      * @param null|string $namespace
-     * @param array $labels
+     * @param array $labelKeys
+     * @param array $labelValues
      */
-    public function setGauge($name, $help, $value, $namespace = null, array $labels = []);
+    public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = []);
 
     /**
      * Set histogram
@@ -72,8 +67,17 @@ interface PrometheusExporterContract
      * @param string $help
      * @param float $value
      * @param null|string $namespace
-     * @param array $labels
+     * @param array $labelKeys
+     * @param array $labelValues
      * @param array|null $buckets
      */
-    public function setHistogram($name, $help, $value, $namespace = null, array $labels = [], array $buckets = null);
+    public function setHistogram(
+        $name,
+        $help,
+        $value,
+        $namespace = null,
+        array $labelKeys = [],
+        array $labelValues = [],
+        array $buckets = null
+    );
 }
