@@ -51,6 +51,9 @@ class PrometheusExporterServiceProvider extends ServiceProvider
                     return new Redis(config('prometheus-exporter.redis'));
                 });
                 break;
+            case 'push':
+                $this->app->bind(Adapter::class, APC::class);
+                break;
             default:
                 throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
         }

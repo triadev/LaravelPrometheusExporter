@@ -8,8 +8,9 @@
 A laravel and lumen service provider to export metrics for prometheus.
 
 ## Main features
-- Metrics
-- Prometheus
+- Metrics with APC
+- Metrics with Redis
+- Metrics with the push gateway
 
 ## Installation
 
@@ -56,9 +57,10 @@ This will create a file ```config/prometheus-exporter.php```.
 ## Configuration
 | Key        | Value           | Description  |
 |:-------------:|:-------------:|:-----:|
-| PROMETHEUS_ADAPTER | STRING | apc or redis |
+| PROMETHEUS_ADAPTER | STRING | apc, redis or push |
 | PROMETHEUS_REDIS_HOST | STRING | 127.0.0.1 |
 | PROMETHEUS_REDIS_PORT | INTEGER | 6379 |
+| PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | Example: localhost:9091 |
 
 ## Reporting Issues
 If you do find an issue, please feel free to report it with GitHub's bug tracker for this project.

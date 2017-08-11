@@ -14,5 +14,9 @@ return [
         'read_timeout'           => 10, // in seconds
         'persistent_connections' => false,
     ],
+
+    'push_gateway' => [
+        'address' => env('PROMETHEUS_PUSH_GATEWAY_ADDRESS', 'localhost:9091')
+    ]
 ];
 

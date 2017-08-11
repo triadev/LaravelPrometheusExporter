@@ -1,11 +1,11 @@
 <?php
 namespace Triadev\PrometheusExporter;
 
+use Prometheus\PushGateway;
 use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 use Prometheus\CollectorRegistry;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Exception\MetricNotFoundException;
-use Illuminate\Support\Facades\Config;
 use Triadev\PrometheusExporter\Repository\ConfigRepository;
 
 /**
@@ -51,9 +51,7 @@ class PrometheusExporter implements PrometheusExporterContract
      */
     public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
-        if (!$namespace) {
-            $namespace = (new ConfigRepository())->getConfig()['namespace'];
-        }
+        $namespace = $this->getNamespace($namespace);
 
         try {
             $counter = $this->registry->getCounter($namespace, $name);
@@ -62,6 +60,8 @@ class PrometheusExporter implements PrometheusExporterContract
         }
 
         $counter->inc($labelValues);
+
+        $this->pushGateway($this->registry, 'inc');
     }
 
     /**
@@ -82,9 +82,7 @@ class PrometheusExporter implements PrometheusExporterContract
         array $labelKeys = [],
         array $labelValues = []
     ) {
-        if (!$namespace) {
-            $namespace = (new ConfigRepository())->getConfig()['namespace'];
-        }
+        $namespace = $this->getNamespace($namespace);
 
         try {
             $counter = $this->registry->getCounter($namespace, $name);
@@ -93,6 +91,8 @@ class PrometheusExporter implements PrometheusExporterContract
         }
 
         $counter->incBy($value, $labelValues);
+
+        $this->pushGateway($this->registry, 'incBy');
     }
 
     /**
@@ -107,9 +107,7 @@ class PrometheusExporter implements PrometheusExporterContract
      */
     public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
-        if (!$namespace) {
-            $namespace = (new ConfigRepository())->getConfig()['namespace'];
-        }
+        $namespace = $this->getNamespace($namespace);
 
         try {
             $gauge = $this->registry->getGauge($namespace, $name);
@@ -118,6 +116,8 @@ class PrometheusExporter implements PrometheusExporterContract
         }
 
         $gauge->set($value, $labelValues);
+
+        $this->pushGateway($this->registry, 'gauge');
     }
 
     /**
@@ -140,9 +140,7 @@ class PrometheusExporter implements PrometheusExporterContract
         array $labelValues = [],
         array $buckets = null
     ) {
-        if (!$namespace) {
-            $namespace = (new ConfigRepository())->getConfig()['namespace'];
-        }
+        $namespace = $this->getNamespace($namespace);
 
         try {
             $histogram = $this->registry->getHistogram($namespace, $name);
@@ -151,5 +149,55 @@ class PrometheusExporter implements PrometheusExporterContract
         }
 
         $histogram->observe($value, $labelValues);
+
+        $this->pushGateway($this->registry, 'histogram');
+    }
+
+    /**
+     * Get config
+     *
+     * @return array
+     */
+    private function getConfig() : array
+    {
+        return (new ConfigRepository())->getConfig();
+    }
+
+    /**
+     * Get namespace
+     *
+     * @param null|string $namespace
+     * @return string
+     */
+    private function getNamespace(?string $namespace = null) : string
+    {
+        $config = $this->getConfig();
+
+        if (!$namespace) {
+            $namespace = $config['namespace'];
+        }
+
+        return $namespace;
+    }
+
+    /**
+     * Push gateway
+     *
+     * @param CollectorRegistry $registry
+     * @param string $job
+     * @param array|null $groupingKey
+     */
+    private function pushGateway(CollectorRegistry $registry, string $job, ?array $groupingKey = null)
+    {
+        $config = (new ConfigRepository())->getConfig();
+
+        if ($config['adapter'] == 'push') {
+            $pushGateway = new PushGateway($config['push_gateway']['address']);
+            $pushGateway->push(
+                $registry,
+                $job,
+                $groupingKey
+            );
+        }
     }
 }
