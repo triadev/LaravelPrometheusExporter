@@ -2,7 +2,7 @@
 namespace Triadev\PrometheusExporter\Facade;
 
 use Illuminate\Support\Facades\Facade;
-use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
+use Triadev\PrometheusExporter\PrometheusExporter;
 
 /**
  * Class PrometheusExporterFacade
@@ -19,6 +19,6 @@ class PrometheusExporterFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return PrometheusExporterContract::class;
+        return PrometheusExporter::class;
     }
 }
