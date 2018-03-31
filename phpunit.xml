@@ -21,6 +21,7 @@
                 <file>./src/Routes/routes.php</file>
                 <directory>./src/Contract</directory>
                 <directory>./src/Facade</directory>
+                <directory>./src/Provider</directory>
             </exclude>
         </whitelist>
     </filter>
