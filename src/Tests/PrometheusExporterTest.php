@@ -2,6 +2,7 @@
 namespace Triadev\PrometheusExporter\Tests;
 
 use Illuminate\Http\Response;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PrometheusExporterTest
@@ -9,7 +10,7 @@ use Illuminate\Http\Response;
  * @author Christopher Lorke <christopher.lorke@gmx.de>
  * @package Triadev\PrometheusExporter\Tests
  */
-class PrometheusExporterTest extends \PHPUnit_Framework_TestCase
+class PrometheusExporterTest extends TestCase
 {
     use PrometheusExporterTestHelper;
 

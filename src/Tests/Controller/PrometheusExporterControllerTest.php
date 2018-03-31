@@ -4,6 +4,7 @@ namespace Triadev\PrometheusExporter\Tests\Controller;
 use Illuminate\Http\Response;
 use Prometheus\RenderTextFormat;
 use Triadev\PrometheusExporter\Tests\PrometheusExporterTestHelper;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class PrometheusExporterControllerTest
@@ -11,7 +12,7 @@ use Triadev\PrometheusExporter\Tests\PrometheusExporterTestHelper;
  * @author Christopher Lorke <christopher.lorke@gmx.de>
  * @package Triadev\PrometheusExporter\Tests\Controller
  */
-class PrometheusExporterControllerTest extends \PHPUnit_Framework_TestCase
+class PrometheusExporterControllerTest extends TestCase
 {
     use PrometheusExporterTestHelper;
 
