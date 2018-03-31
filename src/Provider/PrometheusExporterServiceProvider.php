@@ -6,6 +6,7 @@ use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 use Prometheus\Storage\Redis;
 use Prometheus\Storage\APC;
 use Prometheus\Storage\Adapter;
+use Triadev\PrometheusExporter\PrometheusExporter;
 
 /**
  * Class PrometheusExporterServiceProvider
@@ -57,6 +58,12 @@ class PrometheusExporterServiceProvider extends ServiceProvider
             default:
                 throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
         }
+
+        $this->app->bind(
+            PrometheusExporterContract::class,
+            PrometheusExporter::class,
+            true
+        );
     }
 
     /**
