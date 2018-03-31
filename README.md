@@ -1,9 +1,11 @@
 # LaravelPrometheusExporter
 
 [![Software license][ico-license]](LICENSE)
+[![Travis][ico-travis]][link-travis]
+[![Coveralls](https://coveralls.io/repos/github/triadev/LaravelPrometheusExporter/badge.svg?branch=master)](https://coveralls.io/github/triadev/LaravelPrometheusExporter?branch=master)
+[![CodeCov](https://codecov.io/gh/triadev/LaravelPrometheusExporter/branch/master/graph/badge.svg)](https://codecov.io/gh/triadev/LaravelPrometheusExporter)
 [![Latest stable][ico-version-stable]][link-packagist]
 [![Monthly installs][ico-downloads-monthly]][link-downloads]
-[![Travis][ico-travis]][link-travis]
 
 A laravel and lumen service provider to export metrics for prometheus.
 

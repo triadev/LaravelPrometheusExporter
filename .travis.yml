@@ -1,12 +1,39 @@
 language: php
+
+sudo: false
+
+services:
+    - docker
+
 php:
-    - '7.1'
+    - 7.1
+    - 7.2
+
 install:
-    composer install --no-interaction
+    - travis_retry composer install --no-interaction --no-suggest
+    - wget -c -nc --retry-connrefused --tries=0 https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar -O coveralls.phar
+    - chmod +x coveralls.phar
+    - php coveralls.phar --version
+
 before_script:
+    - mkdir -p build/logs
+    - ls -al
     - yes | pecl install apcu apcu_bc-beta
     - echo "extension=apcu.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "extension=apc.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - echo "apc.enable_cli=1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
 script:
-    ./vendor/bin/phpunit --group=PrometheusExporter
+    - ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_success:
+    - travis_retry php coveralls.phar -v
+    - bash <(curl -s https://codecov.io/bash)
+
+branches:
+    only: master
+
+cache:
+    directories:
+        - vendor
+        - $HOME/.cache/composer
