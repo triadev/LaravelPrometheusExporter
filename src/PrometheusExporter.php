@@ -121,6 +121,61 @@ class PrometheusExporter implements PrometheusExporterContract
     }
 
     /**
+     * inc Gauge
+     *
+     * @param string $name
+     * @param string $help
+     * @param string|null $namespace
+     * @param array $labelKeys
+     * @param array $labelValues
+     */
+    public function incGauge($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
+    {
+        $namespace = $this->getNamespace($namespace);
+
+        try {
+            $gauge = $this->registry->getGauge($namespace, $name);
+        } catch (MetricNotFoundException $e) {
+            $gauge = $this->registry->registerGauge($namespace, $name, $help, $labelKeys);
+        }
+
+        $gauge->inc($labelValues);
+
+        $this->pushGateway($this->registry, 'inc');
+    }
+
+    /**
+     * incBy Gauge
+     *
+     * @param string $name
+     * @param string $help
+     * @param float $value
+     * @param string|null $namespace
+     * @param array $labelKeys
+     * @param array $labelValues
+     */
+    public function incByGauge(
+        $name,
+        $help,
+        $value,
+        $namespace = null,
+        array $labelKeys = [],
+        array $labelValues = []
+    ) {
+        $namespace = $this->getNamespace($namespace);
+
+        try {
+            $gauge = $this->registry->getGauge($namespace, $name);
+        } catch (MetricNotFoundException $e) {
+            $gauge = $this->registry->registerGauge($namespace, $name, $help, $labelKeys);
+        }
+
+        $gauge->incBy($value, $labelValues);
+
+        $this->pushGateway($this->registry, 'incBy');
+    }
+
+    /**
      * Set histogram
      *
      * @param string $name
