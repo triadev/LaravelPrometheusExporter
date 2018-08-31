@@ -1,0 +1,11 @@
+version: '2'
+services:
+  fpm:
+    container_name: fpm
+    build:
+      context: .
+      dockerfile: docker/fpm/Dockerfile
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/var/www/html:delegated

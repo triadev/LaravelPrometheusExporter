@@ -6,7 +6,6 @@ use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 use Prometheus\CollectorRegistry;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Exception\MetricNotFoundException;
-use Triadev\PrometheusExporter\Repository\ConfigRepository;
 
 /**
  * Class PrometheusExporter
@@ -39,7 +38,7 @@ class PrometheusExporter implements PrometheusExporterContract
     {
         return $this->registry->getMetricFamilySamples();
     }
-
+    
     /**
      * inc
      *
@@ -48,11 +47,13 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
         $namespace = $this->getNamespace($namespace);
-
+        
         try {
             $counter = $this->registry->getCounter($namespace, $name);
         } catch (MetricNotFoundException $e) {
@@ -63,7 +64,7 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'inc');
     }
-
+    
     /**
      * incBy
      *
@@ -73,6 +74,8 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function incByCounter(
         $name,
@@ -94,7 +97,7 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'incBy');
     }
-
+    
     /**
      * Set gauge
      *
@@ -104,6 +107,8 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param null|string $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
@@ -119,7 +124,7 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'gauge');
     }
-
+    
     /**
      * inc Gauge
      *
@@ -128,6 +133,8 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function incGauge($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
@@ -143,7 +150,7 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'inc');
     }
-
+    
     /**
      * incBy Gauge
      *
@@ -153,6 +160,8 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function incByGauge(
         $name,
@@ -174,7 +183,7 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'incBy');
     }
-
+    
     /**
      * Set histogram
      *
@@ -185,6 +194,8 @@ class PrometheusExporter implements PrometheusExporterContract
      * @param array $labelKeys
      * @param array $labelValues
      * @param array|null $buckets
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
      */
     public function setHistogram(
         $name,
@@ -207,47 +218,21 @@ class PrometheusExporter implements PrometheusExporterContract
 
         $this->pushGateway($this->registry, 'histogram');
     }
-
-    /**
-     * Get config
-     *
-     * @return array
-     */
-    private function getConfig() : array
-    {
-        return (new ConfigRepository())->getConfig();
-    }
-
-    /**
-     * Get namespace
-     *
-     * @param null|string $namespace
-     * @return string
-     */
+    
     private function getNamespace(?string $namespace = null) : string
     {
-        $config = $this->getConfig();
-
         if (!$namespace) {
-            $namespace = $config['namespace'];
+            $namespace = config('prometheus-exporter.namespace');
         }
 
         return $namespace;
     }
-
-    /**
-     * Push gateway
-     *
-     * @param CollectorRegistry $registry
-     * @param string $job
-     * @param array|null $groupingKey
-     */
+    
     private function pushGateway(CollectorRegistry $registry, string $job, ?array $groupingKey = null)
     {
-        $config = (new ConfigRepository())->getConfig();
-
-        if ($config['adapter'] == 'push') {
-            $pushGateway = new PushGateway($config['push_gateway']['address']);
+        if (config('prometheus-exporter.adapter') == 'push') {
+            $pushGateway = new PushGateway(config('prometheus-exporter.push_gateway.address'));
+            
             $pushGateway->push(
                 $registry,
                 $job,
