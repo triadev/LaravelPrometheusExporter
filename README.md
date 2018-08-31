@@ -12,6 +12,7 @@ A laravel and lumen service provider to export metrics for prometheus.
 ## Main features
 - Metrics with APC
 - Metrics with Redis
+- Metrics with InMemory
 - Metrics with the push gateway
 
 ## Installation
@@ -25,20 +26,6 @@ Register the service provider in the config/app.php (Laravel) or in the bootstra
 'providers' => [
     \Triadev\PrometheusExporter\Provider\PrometheusExporterServiceProvider::class
 ]
-```
-
-Add the facade in the config/app.php (Laravel):
-```
-'aliases' => [
-    'PrometheusExporter' => \Triadev\PrometheusExporter\Facade\PrometheusExporterFacade::class
-]
-```
-
-Add the facade in the bootstrap/app.php (Lumen):
-```
-if (!class_exists('PrometheusExporter')) {
-    class_alias(\Triadev\PrometheusExporter\Facade\PrometheusExporterFacade::class, 'PrometheusExporter');
-}
 ```
 
 Add the endpoint in the routes/web.php (Lumen):
@@ -59,7 +46,7 @@ This will create a file ```config/prometheus-exporter.php```.
 ## Configuration
 | Key        | Value           | Description  |
 |:-------------:|:-------------:|:-----:|
-| PROMETHEUS_ADAPTER | STRING | apc, redis or push |
+| PROMETHEUS_ADAPTER | STRING | apc, redis, inmemory or push |
 | PROMETHEUS_REDIS_HOST | STRING | 127.0.0.1 |
 | PROMETHEUS_REDIS_PORT | INTEGER | 6379 |
 | PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | Example: localhost:9091 |

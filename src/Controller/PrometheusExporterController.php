@@ -6,12 +6,6 @@ use Illuminate\Routing\Controller;
 use Prometheus\RenderTextFormat;
 use Triadev\PrometheusExporter\PrometheusExporter;
 
-/**
- * Class PrometheusExporterController
- *
- * @author Christopher Lorke <christopher.lorke@gmx.de>
- * @package Triadev\PrometheusExporter\Controller
- */
 class PrometheusExporterController extends Controller
 {
     /**

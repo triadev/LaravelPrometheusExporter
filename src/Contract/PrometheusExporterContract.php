@@ -3,12 +3,6 @@ namespace Triadev\PrometheusExporter\Contract;
 
 use Prometheus\MetricFamilySamples;
 
-/**
- * Interface PrometheusExporterContract
- *
- * @author Christopher Lorke <christopher.lorke@gmx.de>
- * @package Triadev\PrometheusExporter\Contract
- */
 interface PrometheusExporterContract
 {
     /**
