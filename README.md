@@ -67,10 +67,10 @@ $router->get('requestPerRoute', function () {
 })->middleware('lpe.requestPerRoute')->name('requestPerRoute');
 ```
 
->app_requests_latency_milliseconds_bucket{route="requestPerRoute",method="GET",status_code="200",le="0.005"} 0\n
+>app_requests_latency_milliseconds_bucket{route="requestPerRoute",method="GET",status_code="200",le="0.005"} 0
 >...
->app_requests_latency_milliseconds_count{route="requestPerRoute",method="GET",status_code="200"} 1\n
->app_requests_latency_milliseconds_sum{route="requestPerRoute",method="GET",status_code="200"} 6\n
+>app_requests_latency_milliseconds_count{route="requestPerRoute",method="GET",status_code="200"} 1
+>app_requests_latency_milliseconds_sum{route="requestPerRoute",method="GET",status_code="200"} 6
 >app_requests_total{route="requestPerRoute",method="GET",status_code="200"} 1
 
 ## Roadmap
