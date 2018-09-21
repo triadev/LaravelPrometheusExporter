@@ -10,6 +10,11 @@
 
 A laravel and lumen service provider to export metrics for prometheus.
 
+## Supported laravel versions
+[![Laravel 5.5][icon-l55]][link-laravel]
+[![Laravel 5.6][icon-l56]][link-laravel]
+[![Laravel 5.7][icon-l57]][link-laravel]
+
 ## Main features
 - Metrics with APC
 - Metrics with Redis
@@ -22,20 +27,9 @@ A laravel and lumen service provider to export metrics for prometheus.
 > composer require triadev/laravel-prometheus-exporter
 
 ### Application
-Register the service provider in the config/app.php (Laravel) or in the bootstrap/app.php (Lumen).
-```
-'providers' => [
-    \Triadev\PrometheusExporter\Provider\PrometheusExporterServiceProvider::class
-]
-```
 
-Add the endpoint in the routes/web.php (Lumen):
-```
-$app->get(
-    'triadev/pe/metrics',
-    \Triadev\PrometheusExporter\Controller\PrometheusExporterController::class . '@metrics'
-);
-```
+The package is registered through the package discovery of laravel and Composer.
+>https://laravel.com/docs/5.7/packages
 
 Once installed you can now publish your config file and set your correct configuration for using the package.
 ```php
@@ -61,6 +55,13 @@ Alternatively, fork the project and make a pull request. :)
 1. docker-compose up
 2. docker exec fpm ./vendor/phpunit/phpunit/phpunit
 
+## Contributing
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+## Credits
+- [Christopher Lorke][link-author]
+- [All Contributors][link-contributors]
+
 ## Other
 
 ### Project related links
@@ -81,3 +82,12 @@ The code for LaravelPrometheusExporter is distributed under the terms of the MIT
 [link-packagist]: https://packagist.org/packages/triadev/laravel-prometheus-exporter
 [link-downloads]: https://packagist.org/packages/triadev/laravel-prometheus-exporter/stats
 [link-travis]: https://travis-ci.org/triadev/LaravelPrometheusExporter
+
+[icon-l55]: https://img.shields.io/badge/Laravel-5.5-brightgreen.svg?style=flat-square
+[icon-l56]: https://img.shields.io/badge/Laravel-5.6-brightgreen.svg?style=flat-square
+[icon-l57]: https://img.shields.io/badge/Laravel-5.7-brightgreen.svg?style=flat-square
+
+[link-laravel]: https://laravel.com
+[link-elasticsearch]: https://www.elastic.co/
+[link-author]: https://github.com/triadev
+[link-contributors]: ../../contributors

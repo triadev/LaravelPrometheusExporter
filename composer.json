@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "illuminate/support": "^5.3",
+        "illuminate/support": "^5.5",
         "jimdo/prometheus_client_php": "^0.7"
     },
     "require-dev": {
@@ -23,7 +23,7 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
         "orchestra/testbench": "~3.0",
-        "laravel/laravel": "^5.6"
+        "laravel/framework": "^5.5"
     },
     "suggest": {
         "ext-redis": "Required if using Redis.",
@@ -51,6 +51,13 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "secure-http": false
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 src --ignore=src/Database/**,src/Config/* --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
+        "fix-style": "phpcbf -p --standard=PSR2 src --ignore=src/Database/**,src/Config/* --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1"
     }
 }
 
