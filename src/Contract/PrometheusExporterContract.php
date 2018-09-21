@@ -1,6 +1,7 @@
 <?php
 namespace Triadev\PrometheusExporter\Contract;
 
+use Prometheus\Exception\MetricsRegistrationException;
 use Prometheus\MetricFamilySamples;
 
 interface PrometheusExporterContract
@@ -20,6 +21,8 @@ interface PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws MetricsRegistrationException
      */
     public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = []);
 
@@ -32,6 +35,8 @@ interface PrometheusExporterContract
      * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws MetricsRegistrationException
      */
     public function incByCounter(
         $name,
@@ -51,9 +56,45 @@ interface PrometheusExporterContract
      * @param null|string $namespace
      * @param array $labelKeys
      * @param array $labelValues
+     *
+     * @throws MetricsRegistrationException
      */
     public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = []);
-
+    
+    /**
+     * Inc by gauge
+     *
+     * @param $name
+     * @param $help
+     * @param null $namespace
+     * @param array $labelKeys
+     * @param array $labelValues
+     *
+     * @throws MetricsRegistrationException
+     */
+    public function incGauge($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = []);
+    
+    /**
+     * incBy Gauge
+     *
+     * @param string $name
+     * @param string $help
+     * @param float $value
+     * @param string|null $namespace
+     * @param array $labelKeys
+     * @param array $labelValues
+     *
+     * @throws \Prometheus\Exception\MetricsRegistrationException
+     */
+    public function incByGauge(
+        $name,
+        $help,
+        $value,
+        $namespace = null,
+        array $labelKeys = [],
+        array $labelValues = []
+    );
+    
     /**
      * Set histogram
      *
@@ -64,6 +105,8 @@ interface PrometheusExporterContract
      * @param array $labelKeys
      * @param array $labelValues
      * @param array|null $buckets
+     *
+     * @throws MetricsRegistrationException
      */
     public function setHistogram(
         $name,
@@ -72,6 +115,6 @@ interface PrometheusExporterContract
         $namespace = null,
         array $labelKeys = [],
         array $labelValues = [],
-        array $buckets = null
+        ?array $buckets = null
     );
 }

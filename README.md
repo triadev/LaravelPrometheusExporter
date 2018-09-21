@@ -46,12 +46,42 @@ This will create a file ```config/prometheus-exporter.php```.
 | PROMETHEUS_REDIS_PORT | INTEGER | 6379 |
 | PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | Example: localhost:9091 |
 
+## Usage
+
+### Middleware
+
+#### RequestPerRoute
+A middleware to build metrics for "request_total" and "requests_latency_milliseconds" per route.
+
+##### Alias
+>lpe.requestPerRoute
+
+##### Metrics
+1. requests_total (inc)
+2. requests_latency_milliseconds (histogram)
+
+##### Example
+```php
+$router->get('requestPerRoute', function () {
+    return 'valid';
+})->middleware('lpe.requestPerRoute')->name('requestPerRoute');
+```
+
+>app_requests_latency_milliseconds_bucket{route="requestPerRoute",method="GET",status_code="200",le="0.005"} 0\n
+>...
+>app_requests_latency_milliseconds_count{route="requestPerRoute",method="GET",status_code="200"} 1\n
+>app_requests_latency_milliseconds_sum{route="requestPerRoute",method="GET",status_code="200"} 6\n
+>app_requests_total{route="requestPerRoute",method="GET",status_code="200"} 1
+
+## Roadmap
+- histogram buckets per route (RequestPerRoute)
+
 ## Reporting Issues
 If you do find an issue, please feel free to report it with GitHub's bug tracker for this project.
 
 Alternatively, fork the project and make a pull request. :)
 
-## Test
+## Testing
 1. docker-compose up
 2. docker exec fpm ./vendor/phpunit/phpunit/phpunit
 

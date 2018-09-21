@@ -34,15 +34,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * inc
-     *
-     * @param string $name
-     * @param string $help
-     * @param string|null $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function incCounter($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
@@ -60,16 +52,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * incBy
-     *
-     * @param string $name
-     * @param string $help
-     * @param float $value
-     * @param string|null $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function incByCounter(
         $name,
@@ -93,16 +76,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * Set gauge
-     *
-     * @param string $name
-     * @param string $help
-     * @param int $value
-     * @param null|string $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function setGauge($name, $help, $value, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
@@ -120,15 +94,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * inc Gauge
-     *
-     * @param string $name
-     * @param string $help
-     * @param string|null $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function incGauge($name, $help, $namespace = null, array $labelKeys = [], array $labelValues = [])
     {
@@ -146,16 +112,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * incBy Gauge
-     *
-     * @param string $name
-     * @param string $help
-     * @param float $value
-     * @param string|null $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function incByGauge(
         $name,
@@ -179,17 +136,7 @@ class PrometheusExporter implements PrometheusExporterContract
     }
     
     /**
-     * Set histogram
-     *
-     * @param string $name
-     * @param string $help
-     * @param float $value
-     * @param null|string $namespace
-     * @param array $labelKeys
-     * @param array $labelValues
-     * @param array|null $buckets
-     *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @inheritdoc
      */
     public function setHistogram(
         $name,
@@ -198,7 +145,7 @@ class PrometheusExporter implements PrometheusExporterContract
         $namespace = null,
         array $labelKeys = [],
         array $labelValues = [],
-        array $buckets = null
+        ?array $buckets = null
     ) {
         $namespace = $this->getNamespace($namespace);
 

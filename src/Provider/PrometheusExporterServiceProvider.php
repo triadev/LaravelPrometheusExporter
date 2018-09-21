@@ -1,12 +1,14 @@
 <?php
 namespace Triadev\PrometheusExporter\Provider;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Prometheus\Storage\InMemory;
 use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 use Prometheus\Storage\Redis;
 use Prometheus\Storage\APC;
 use Prometheus\Storage\Adapter;
+use Triadev\PrometheusExporter\Middleware\RequestPerRoute;
 use Triadev\PrometheusExporter\PrometheusExporter;
 
 class PrometheusExporterServiceProvider extends ServiceProvider
@@ -62,6 +64,10 @@ class PrometheusExporterServiceProvider extends ServiceProvider
             default:
                 throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
         }
+    
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->aliasMiddleware('lpe.requestPerRoute', RequestPerRoute::class);
     
         $this->app->bind(PrometheusExporterContract::class, PrometheusExporter::class, true);
     }

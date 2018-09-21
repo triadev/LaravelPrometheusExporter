@@ -74,6 +74,30 @@ class PrometheusExporterTest extends TestCase
     /**
      * @test
      */
+    public function it_inc_gauge()
+    {
+        $this->service->incGauge('phpunit_incGauge', '');
+        
+        $this->assertEquals(1, $this->getMetricValue('phpunit_incGauge'));
+    
+        $this->service->incGauge('phpunit_incGauge', '');
+    
+        $this->assertEquals(2, $this->getMetricValue('phpunit_incGauge'));
+    }
+    
+    /**
+     * @test
+     */
+    public function it_inc_by_gauge()
+    {
+        $this->service->incByGauge('phpunit_incByGauge', '', 2);
+        
+        $this->assertEquals(2, $this->getMetricValue('phpunit_incByGauge'));
+    }
+    
+    /**
+     * @test
+     */
     public function it_set_a_histogram()
     {
         $this->service->setHistogram('phpunit_setHistogram', '', 1);
