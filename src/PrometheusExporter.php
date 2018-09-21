@@ -7,12 +7,6 @@ use Prometheus\CollectorRegistry;
 use Prometheus\MetricFamilySamples;
 use Prometheus\Exception\MetricNotFoundException;
 
-/**
- * Class PrometheusExporter
- *
- * @author Christopher Lorke <christopher.lorke@gmx.de>
- * @package Triadev\PrometheusExporter
- */
 class PrometheusExporter implements PrometheusExporterContract
 {
     /**
