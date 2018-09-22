@@ -59,7 +59,7 @@ class RequestPerRoute
         $this->prometheusExporter->incCounter(
             'requests_total',
             'the number of http requests',
-            config('prometheus_exporter.namespace_http_server'),
+            config('prometheus_exporter.namespace_http'),
             [
                 'route',
                 'method',
@@ -82,11 +82,17 @@ class RequestPerRoute
      */
     private function requestLatencyMetric(string $routeName, string $method, int $status, int $duration)
     {
+        $bucketsPerRoute = null;
+        
+        if ($bucketsPerRouteConfig = config('prometheus-exporter.buckets_per_route')) {
+            $bucketsPerRoute = array_get($bucketsPerRouteConfig, $routeName);
+        }
+        
         $this->prometheusExporter->setHistogram(
             'requests_latency_milliseconds',
             'duration of requests',
             $duration,
-            config('prometheus_exporter.namespace_http_server'),
+            config('prometheus_exporter.namespace_http'),
             [
                 'route',
                 'method',
@@ -96,7 +102,8 @@ class RequestPerRoute
                 $routeName,
                 $method,
                 $status
-            ]
+            ],
+            $bucketsPerRoute
         );
     }
 }

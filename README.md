@@ -20,6 +20,7 @@ A laravel and lumen service provider to export metrics for prometheus.
 - Metrics with Redis
 - Metrics with InMemory
 - Metrics with the push gateway
+- Request per route middleware (total and duration metrics)
 
 ## Installation
 
@@ -39,12 +40,25 @@ php artisan vendor:publish --provider="Triadev\PrometheusExporter\Provider\Prome
 This will create a file ```config/prometheus-exporter.php```.
 
 ## Configuration
-| Key        | Value           | Description  |
-|:-------------:|:-------------:|:-----:|
-| PROMETHEUS_ADAPTER | STRING | apc, redis, inmemory or push |
-| PROMETHEUS_REDIS_HOST | STRING | 127.0.0.1 |
-| PROMETHEUS_REDIS_PORT | INTEGER | 6379 |
-| PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | Example: localhost:9091 |
+| Key        | Env | Value           | Description  | Default |
+|:-------------:|:-------------:|:-------------:|:-----:|:-----:|
+| adapter | PROMETHEUS_ADAPTER | STRING | apc, redis, inmemory or push | apc |
+| namespace | --- | STRING | default: app | app |
+| namespace_http | --- | STRING | namespace for "RequestPerRoute-Middleware metrics" | http |
+| redis.host | PROMETHEUS_REDIS_HOST | STRING | redis host | 127.0.0.1
+| redis.port | PROMETHEUS_REDIS_PORT | INTEGER | redis port | 6379 |
+| redis.timeout | --- | FLOAT | redis timeout | 0.1 |
+| redis.read_timeout | --- | INTEGER | redis read timeout | 10 |
+| push_gateway.address | PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | push gateway address | localhost:9091 |
+| buckets_per_route | --- | STRING | histogram buckets for "RequestPerRoute-Middleware" | --- |
+
+### buckets_per_route
+```
+'buckets_per_route' => [
+    ROUTE-NAME => [10,20,50,100,200],
+    ...
+]
+```
 
 ## Usage
 

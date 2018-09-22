@@ -5,7 +5,7 @@ return [
     
     'namespace' => 'app',
     
-    'namespace_http_server' => 'http_server',
+    'namespace_http' => 'http',
     
     'redis' => [
         'host'                   => env('PROMETHEUS_REDIS_HOST', '127.0.0.1'),
@@ -17,6 +17,7 @@ return [
     
     'push_gateway' => [
         'address' => env('PROMETHEUS_PUSH_GATEWAY_ADDRESS', 'localhost:9091')
-    ]
+    ],
+    
+    'buckets_per_route' => []
 ];
-
