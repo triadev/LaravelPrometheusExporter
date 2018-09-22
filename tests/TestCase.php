@@ -35,6 +35,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('prometheus-exporter.adapter', 'apc');
+        
+        $app['config']->set('prometheus-exporter.buckets_per_route', [
+            'requestPerRoute' => [10, 20, 50, 100, 200]
+        ]);
     }
     
     /**
