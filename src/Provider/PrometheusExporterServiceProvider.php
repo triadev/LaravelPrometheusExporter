@@ -71,16 +71,4 @@ class PrometheusExporterServiceProvider extends ServiceProvider
     
         $this->app->bind(PrometheusExporterContract::class, PrometheusExporter::class, true);
     }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides() : array
-    {
-        return [
-            PrometheusExporterContract::class
-        ];
-    }
 }
