@@ -66,7 +66,7 @@ interface PrometheusExporterContract
      *
      * @param $name
      * @param $help
-     * @param null $namespace
+     * @param string|null $namespace
      * @param array $labelKeys
      * @param array $labelValues
      *

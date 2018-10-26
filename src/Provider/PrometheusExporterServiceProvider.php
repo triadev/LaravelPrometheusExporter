@@ -18,8 +18,7 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         $source = realpath(__DIR__ . '/../Config/config.php');
     
         if (class_exists('Illuminate\Foundation\Application', false)) {
@@ -27,7 +26,7 @@ class PrometheusExporterServiceProvider extends ServiceProvider
                 __DIR__ . '/../Config/config.php' => config_path('prometheus-exporter.php'),
             ], 'config');
         } elseif (class_exists('Laravel\Lumen\Application', false)) {
-            $this->app->configure('prometheus-exporter');
+            $this->app/** @scrutinizer ignore-call */->configure('prometheus-exporter');
         }
     
         $this->mergeConfigFrom($source, 'prometheus-exporter');
@@ -42,8 +41,7 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      *
      * @throws \ErrorException
      */
-    public function register()
-    {
+    public function register() {
         $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'prometheus-exporter');
     
         switch (config('prometheus-exporter.adapter')) {
