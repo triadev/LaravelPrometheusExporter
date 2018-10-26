@@ -4,6 +4,7 @@
 [![Travis][ico-travis]][link-travis]
 [![Coveralls](https://coveralls.io/repos/github/triadev/LaravelPrometheusExporter/badge.svg?branch=master)](https://coveralls.io/github/triadev/LaravelPrometheusExporter?branch=master)
 [![CodeCov](https://codecov.io/gh/triadev/LaravelPrometheusExporter/branch/master/graph/badge.svg)](https://codecov.io/gh/triadev/LaravelPrometheusExporter)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/triadev/LaravelPrometheusExporter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/triadev/LaravelPrometheusExporter/?branch=master)
 [![Latest stable][ico-version-stable]][link-packagist]
 [![Monthly installs][ico-downloads-monthly]][link-downloads]
 [![Total Downloads](https://img.shields.io/packagist/dt/triadev/laravel-prometheus-exporter.svg?style=flat-square)](https://packagist.org/packages/triadev/laravel-prometheus-exporter)
@@ -129,6 +130,7 @@ The code for LaravelPrometheusExporter is distributed under the terms of the MIT
 [link-packagist]: https://packagist.org/packages/triadev/laravel-prometheus-exporter
 [link-downloads]: https://packagist.org/packages/triadev/laravel-prometheus-exporter/stats
 [link-travis]: https://travis-ci.org/triadev/LaravelPrometheusExporter
+[link-scrutinizer]: https://scrutinizer-ci.com/g/triadev/LaravelPrometheusExporter/badges/quality-score.png?b=master
 
 [icon-l55]: https://img.shields.io/badge/Laravel-5.5-brightgreen.svg?style=flat-square
 [icon-l56]: https://img.shields.io/badge/Laravel-5.6-brightgreen.svg?style=flat-square
