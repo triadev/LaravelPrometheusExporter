@@ -18,7 +18,8 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot() {
+    public function boot()
+    {
         $source = realpath(__DIR__ . '/../Config/config.php');
     
         if (class_exists('Illuminate\Foundation\Application', false)) {
@@ -41,7 +42,8 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      *
      * @throws \ErrorException
      */
-    public function register() {
+    public function register()
+    {
         $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'prometheus-exporter');
     
         switch (config('prometheus-exporter.adapter')) {
@@ -63,9 +65,11 @@ class PrometheusExporterServiceProvider extends ServiceProvider
                 throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
         }
     
-        /** @var Router $router */
-        $router = $this->app['router'];
-        $router->aliasMiddleware('lpe.requestPerRoute', RequestPerRoute::class);
+        if (class_exists('Illuminate\Foundation\Application', false)) {
+            /** @var Router $router */
+            $router = $this->app['router'];
+            $router->aliasMiddleware('lpe.requestPerRoute', RequestPerRoute::class);
+        }
     
         $this->app->bind(PrometheusExporterContract::class, PrometheusExporter::class, true);
     }

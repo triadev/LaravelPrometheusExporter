@@ -57,8 +57,8 @@
     "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
-        "check-style": "phpcs -p --standard=PSR2 src --ignore=src/Database/**,src/Config/* --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1",
-        "fix-style": "phpcbf -p --standard=PSR2 src --ignore=src/Database/**,src/Config/* --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1"
+        "check-style": "phpcs -p --standard=PSR2 src --ignore=src/Database/**,src/Config/*",
+        "fix-style": "phpcbf -p --standard=PSR2 src --ignore=src/Database/**,src/Config/*"
     }
 }
 
