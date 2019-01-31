@@ -68,7 +68,7 @@ This will create a file ```config/prometheus-exporter.php```.
 
 ### Middleware
 
-#### RequestPerRoute
+#### RequestPerRoute (only laravel)
 A middleware to build metrics for "request_total" and "requests_latency_milliseconds" per route.
 
 ##### Alias
