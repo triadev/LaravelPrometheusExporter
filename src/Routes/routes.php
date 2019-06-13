@@ -2,5 +2,5 @@
 
 Route::get(
     'triadev/pe/metrics',
-    \Triadev\PrometheusExporter\Controller\PrometheusExporterController::class . '@metrics'
+    \Triadev\PrometheusExporter\Controller\LaravelController::class . '@metrics'
 )->name('triadev.pe.metrics');

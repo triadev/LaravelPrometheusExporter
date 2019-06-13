@@ -1,4 +1,4 @@
-version: '2.2'
+version: '3.7'
 services:
   fpm:
     container_name: fpm

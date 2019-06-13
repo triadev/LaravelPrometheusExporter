@@ -15,7 +15,7 @@
     ],
     "require": {
         "php": ">=7.1",
-        "illuminate/support": "^5.5",
+        "illuminate/support": "^5.6",
         "jimdo/prometheus_client_php": "^0.9.1"
     },
     "require-dev": {
@@ -23,7 +23,8 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
         "orchestra/testbench": "~3.0",
-        "laravel/framework": "^5.5",
+        "laravel/framework": "5.6|5.7|5.8",
+        "laravel/lumen-framework": "5.6|5.7|5.8",
         "squizlabs/php_codesniffer": "^3.0"
     },
     "suggest": {

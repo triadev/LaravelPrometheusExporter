@@ -2,11 +2,11 @@
 namespace Triadev\PrometheusExporter\Controller;
 
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use Prometheus\RenderTextFormat;
 use Triadev\PrometheusExporter\PrometheusExporter;
+use Laravel\Lumen\Routing\Controller;
 
-class PrometheusExporterController extends Controller
+class LumenController extends Controller
 {
     /**
      * @var PrometheusExporter
@@ -33,8 +33,8 @@ class PrometheusExporterController extends Controller
     public function metrics() : Response
     {
         $renderer = new RenderTextFormat();
-
-        return Response::create(
+        
+        return \response()->make(
             $renderer->render($this->prometheusExporter->getMetricFamilySamples())
         )->header('Content-Type', RenderTextFormat::MIME_TYPE);
     }
