@@ -12,9 +12,9 @@
 A laravel and lumen service provider to export metrics for prometheus.
 
 ## Supported laravel versions
-[![Laravel 5.5][icon-l55]][link-laravel]
 [![Laravel 5.6][icon-l56]][link-laravel]
 [![Laravel 5.7][icon-l57]][link-laravel]
+[![Laravel 5.8][icon-l58]][link-laravel]
 
 ## Main features
 - Metrics with APC
@@ -31,7 +31,7 @@ A laravel and lumen service provider to export metrics for prometheus.
 ### Application
 
 The package is registered through the package discovery of laravel and Composer.
->https://laravel.com/docs/5.7/packages
+>https://laravel.com/docs/5.8/packages
 
 Once installed you can now publish your config file and set your correct configuration for using the package.
 ```php
@@ -63,8 +63,28 @@ This will create a file ```config/prometheus-exporter.php```.
 
 ## Usage
 
-### Endpoint to get metrics
+### Get metrics
+
+#### Laravel
+When you are using laravel you can use the default http endpoint:
 >triadev/pe/metrics
+
+Of course you can also register your own route. Here is an example:
+```
+Route::get(
+    ROUTE,
+    \Triadev\PrometheusExporter\Controller\LaravelController::class . '@metrics'
+);
+```
+
+#### Lumen
+When you are using lumen you must register the route on your own. Here is an example:
+```
+Route::get(
+    ROUTE,
+    \Triadev\PrometheusExporter\Controller\LumenController::class . '@metrics'
+);
+```
 
 ### Middleware
 
@@ -132,11 +152,10 @@ The code for LaravelPrometheusExporter is distributed under the terms of the MIT
 [link-travis]: https://travis-ci.org/triadev/LaravelPrometheusExporter
 [link-scrutinizer]: https://scrutinizer-ci.com/g/triadev/LaravelPrometheusExporter/badges/quality-score.png?b=master
 
-[icon-l55]: https://img.shields.io/badge/Laravel-5.5-brightgreen.svg?style=flat-square
 [icon-l56]: https://img.shields.io/badge/Laravel-5.6-brightgreen.svg?style=flat-square
 [icon-l57]: https://img.shields.io/badge/Laravel-5.7-brightgreen.svg?style=flat-square
+[icon-l58]: https://img.shields.io/badge/Laravel-5.8-brightgreen.svg?style=flat-square
 
 [link-laravel]: https://laravel.com
-[link-elasticsearch]: https://www.elastic.co/
 [link-author]: https://github.com/triadev
 [link-contributors]: ../../contributors

@@ -20,6 +20,12 @@ class PrometheusExporterServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->bootConfig();
+        $this->bootRoutes();
+    }
+    
+    private function bootConfig()
+    {
         $source = realpath(__DIR__ . '/../Config/config.php');
     
         if (class_exists('Illuminate\Foundation\Application', false)) {
@@ -31,7 +37,10 @@ class PrometheusExporterServiceProvider extends ServiceProvider
         }
     
         $this->mergeConfigFrom($source, 'prometheus-exporter');
+    }
     
+    private function bootRoutes()
+    {
         if (class_exists('Illuminate\Foundation\Application', false)) {
             $this->loadRoutesFrom(__DIR__ . '/../Routes/routes.php');
         }
@@ -46,6 +55,21 @@ class PrometheusExporterServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../Config/config.php', 'prometheus-exporter');
     
+        $this->registerAdapter();
+        $this->registerMiddlewareForRequestMetrics();
+    
+        $this->app->bind(
+            PrometheusExporterContract::class,
+            PrometheusExporter::class,
+            true
+        );
+    }
+    
+    /**
+     * @throws \ErrorException
+     */
+    private function registerAdapter()
+    {
         switch (config('prometheus-exporter.adapter')) {
             case 'apc':
                 $this->app->bind(Adapter::class, APC::class);
@@ -64,13 +88,14 @@ class PrometheusExporterServiceProvider extends ServiceProvider
             default:
                 throw new \ErrorException('"prometheus-exporter.adapter" must be either apc or redis');
         }
+    }
     
+    private function registerMiddlewareForRequestMetrics()
+    {
         if (class_exists('Illuminate\Foundation\Application', false)) {
             /** @var Router $router */
             $router = $this->app['router'];
             $router->aliasMiddleware('lpe.requestPerRoute', RequestPerRoute::class);
         }
-    
-        $this->app->bind(PrometheusExporterContract::class, PrometheusExporter::class, true);
     }
 }
