@@ -3,7 +3,8 @@ namespace Triadev\PrometheusExporter\Middleware;
 
 use Illuminate\Http\Request;
 use Closure;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Response;
+use Prometheus\Exception\MetricsRegistrationException;
 use Triadev\PrometheusExporter\Contract\PrometheusExporterContract;
 
 class RequestPerRoute
@@ -23,27 +24,27 @@ class RequestPerRoute
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  Request $request
      * @param  \Closure $next
      * @return mixed
      *
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     * @throws MetricsRegistrationException
      */
     public function handle(Request $request, Closure $next)
     {
         $start = microtime(true);
     
-        /** @var \Illuminate\Http\Response $response */
+        /** @var Response $response */
         $response = $next($request);
     
         $durationMilliseconds = (microtime(true) - $start) * 1000.0;
-    
-        $routeName = Route::currentRouteName() ?: 'unnamed';
+        
+        $path = $request->path();
         $method = $request->getMethod();
         $status = $response->getStatusCode();
         
-        $this->requestCountMetric($routeName, $method, $status);
-        $this->requestLatencyMetric($routeName, $method, $status, $durationMilliseconds);
+        $this->requestCountMetric($path, $method, $status);
+        $this->requestLatencyMetric($path, $method, $status, $durationMilliseconds);
     
         return $response;
     }
@@ -52,7 +53,8 @@ class RequestPerRoute
      * @param string $routeName
      * @param string $method
      * @param int $status
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     *
+     * @throws MetricsRegistrationException
      */
     private function requestCountMetric(string $routeName, string $method, int $status)
     {
@@ -78,7 +80,8 @@ class RequestPerRoute
      * @param string $method
      * @param int $status
      * @param int $duration
-     * @throws \Prometheus\Exception\MetricsRegistrationException
+     *
+     * @throws MetricsRegistrationException
      */
     private function requestLatencyMetric(string $routeName, string $method, int $status, int $duration)
     {

@@ -16,6 +16,11 @@ A laravel and lumen service provider to export metrics for prometheus.
 [![Laravel 5.7][icon-l57]][link-laravel]
 [![Laravel 5.8][icon-l58]][link-laravel]
 
+## Supported lumen versions
+[![Lumen 5.6][icon-lumen56]][link-lumen]
+[![Lumen 5.7][icon-lumen57]][link-lumen]
+[![Lumen 5.8][icon-lumen58]][link-lumen]
+
 ## Main features
 - Metrics with APC
 - Metrics with Redis
@@ -88,7 +93,7 @@ Route::get(
 
 ### Middleware
 
-#### RequestPerRoute (only laravel)
+#### RequestPerRoute
 A middleware to build metrics for "request_total" and "requests_latency_milliseconds" per route.
 
 ##### Alias
@@ -100,16 +105,16 @@ A middleware to build metrics for "request_total" and "requests_latency_millisec
 
 ##### Example
 ```php
-$router->get('requestPerRoute', function () {
+$router->get('/test/route', function () {
     return 'valid';
-})->middleware('lpe.requestPerRoute')->name('requestPerRoute');
+})->middleware('lpe.requestPerRoute');
 ```
 
->app_requests_latency_milliseconds_bucket{route="requestPerRoute",method="GET",status_code="200",le="0.005"} 0
+>app_requests_latency_milliseconds_bucket{route="/test/route",method="GET",status_code="200",le="0.005"} 0
 >...
->app_requests_latency_milliseconds_count{route="requestPerRoute",method="GET",status_code="200"} 1
->app_requests_latency_milliseconds_sum{route="requestPerRoute",method="GET",status_code="200"} 6
->app_requests_total{route="requestPerRoute",method="GET",status_code="200"} 1
+>app_requests_latency_milliseconds_count{route="/test/route",method="GET",status_code="200"} 1
+>app_requests_latency_milliseconds_sum{route="/test/route",method="GET",status_code="200"} 6
+>app_requests_total{route="/test/route",method="GET",status_code="200"} 1
 
 ## Roadmap
 - histogram buckets per route (RequestPerRoute)
@@ -156,6 +161,11 @@ The code for LaravelPrometheusExporter is distributed under the terms of the MIT
 [icon-l57]: https://img.shields.io/badge/Laravel-5.7-brightgreen.svg?style=flat-square
 [icon-l58]: https://img.shields.io/badge/Laravel-5.8-brightgreen.svg?style=flat-square
 
+[icon-lumen56]: https://img.shields.io/badge/Lumen-5.6-brightgreen.svg?style=flat-square
+[icon-lumen57]: https://img.shields.io/badge/Lumen-5.7-brightgreen.svg?style=flat-square
+[icon-lumen58]: https://img.shields.io/badge/Lumen-5.8-brightgreen.svg?style=flat-square
+
 [link-laravel]: https://laravel.com
+[link-lumen]: https://lumen.laravel.com
 [link-author]: https://github.com/triadev
 [link-contributors]: ../../contributors
