@@ -8,6 +8,8 @@
 [![Latest stable][ico-version-stable]][link-packagist]
 [![Monthly installs][ico-downloads-monthly]][link-downloads]
 [![Total Downloads](https://img.shields.io/packagist/dt/triadev/laravel-prometheus-exporter.svg?style=flat-square)](https://packagist.org/packages/triadev/laravel-prometheus-exporter)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/triadev/LaravelPrometheusExporter.svg)](http://isitmaintained.com/project/triadev/LaravelPrometheusExporter "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/triadev/LaravelPrometheusExporter.svg)](http://isitmaintained.com/project/triadev/LaravelPrometheusExporter "Percentage of issues still open")
 
 A laravel and lumen service provider to export metrics for prometheus.
 
