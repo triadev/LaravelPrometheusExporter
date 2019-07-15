@@ -53,8 +53,9 @@ This will create a file ```config/prometheus-exporter.php```.
 | adapter | PROMETHEUS_ADAPTER | STRING | apc, redis, inmemory or push | apc |
 | namespace | --- | STRING | default: app | app |
 | namespace_http | --- | STRING | namespace for "RequestPerRoute-Middleware metrics" | http |
-| redis.host | PROMETHEUS_REDIS_HOST | STRING | redis host | 127.0.0.1
-| redis.port | PROMETHEUS_REDIS_PORT | INTEGER | redis port | 6379 |
+| redis.host | PROMETHEUS_REDIS_HOST, REDIS_HOST | STRING | redis host | 127.0.0.1
+| redis.port | PROMETHEUS_REDIS_PORT, REDIS_PORT | INTEGER | redis port | 6379 |
+| redis.password | PROMETHEUS_REDIS_PASSWORD, REDIS_PASSWORD | STRING | redis password | null |
 | redis.timeout | --- | FLOAT | redis timeout | 0.1 |
 | redis.read_timeout | --- | INTEGER | redis read timeout | 10 |
 | push_gateway.address | PROMETHEUS_PUSH_GATEWAY_ADDRESS | STRING | push gateway address | localhost:9091 |
