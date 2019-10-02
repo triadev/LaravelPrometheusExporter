@@ -17,11 +17,13 @@ A laravel and lumen service provider to export metrics for prometheus.
 [![Laravel 5.6][icon-l56]][link-laravel]
 [![Laravel 5.7][icon-l57]][link-laravel]
 [![Laravel 5.8][icon-l58]][link-laravel]
+[![Laravel 6.0][icon-l60]][link-laravel]
 
 ## Supported lumen versions
 [![Lumen 5.6][icon-lumen56]][link-lumen]
 [![Lumen 5.7][icon-lumen57]][link-lumen]
 [![Lumen 5.8][icon-lumen58]][link-lumen]
+[![Lumen 6.0][icon-lumen60]][link-lumen]
 
 ## Main features
 - Metrics with APC
@@ -163,10 +165,12 @@ The code for LaravelPrometheusExporter is distributed under the terms of the MIT
 [icon-l56]: https://img.shields.io/badge/Laravel-5.6-brightgreen.svg?style=flat-square
 [icon-l57]: https://img.shields.io/badge/Laravel-5.7-brightgreen.svg?style=flat-square
 [icon-l58]: https://img.shields.io/badge/Laravel-5.8-brightgreen.svg?style=flat-square
+[icon-l60]: https://img.shields.io/badge/Laravel-6.0-brightgreen.svg?style=flat-square
 
 [icon-lumen56]: https://img.shields.io/badge/Lumen-5.6-brightgreen.svg?style=flat-square
 [icon-lumen57]: https://img.shields.io/badge/Lumen-5.7-brightgreen.svg?style=flat-square
 [icon-lumen58]: https://img.shields.io/badge/Lumen-5.8-brightgreen.svg?style=flat-square
+[icon-lumen60]: https://img.shields.io/badge/Lumen-6.0-brightgreen.svg?style=flat-square
 
 [link-laravel]: https://laravel.com
 [link-lumen]: https://lumen.laravel.com
