@@ -1,6 +1,8 @@
 <?php
+
 namespace Triadev\PrometheusExporter\Middleware;
 
+use Exception;
 use Illuminate\Http\Request;
 use Closure;
 use Illuminate\Http\Response;
@@ -11,7 +13,7 @@ class RequestPerRoute
 {
     /** @var PrometheusExporterContract */
     private $prometheusExporter;
-    
+
     /**
      * RequestPerRoute constructor.
      * @param PrometheusExporterContract $prometheusExporter
@@ -20,12 +22,12 @@ class RequestPerRoute
     {
         $this->prometheusExporter = $prometheusExporter;
     }
-    
+
     /**
      * Handle an incoming request.
      *
-     * @param  Request $request
-     * @param  \Closure $next
+     * @param Request $request
+     * @param \Closure $next
      * @return mixed
      *
      * @throws MetricsRegistrationException
@@ -33,22 +35,25 @@ class RequestPerRoute
     public function handle(Request $request, Closure $next)
     {
         $start = microtime(true);
-    
+
         /** @var Response $response */
         $response = $next($request);
-    
-        $durationMilliseconds = (microtime(true) - $start) * 1000.0;
-        
-        $path = $request->path();
-        $method = $request->getMethod();
-        $status = $response->getStatusCode();
-        
-        $this->requestCountMetric($path, $method, $status);
-        $this->requestLatencyMetric($path, $method, $status, $durationMilliseconds);
-    
+        try {
+            $durationMilliseconds = (microtime(true) - $start) * 1000.0;
+
+            $path = $request->path();
+            $method = $request->getMethod();
+            $status = $response->getStatusCode();
+
+            $this->requestCountMetric($path, $method, $status);
+            $this->requestLatencyMetric($path, $method, $status, $durationMilliseconds);
+        } catch (Exception $e) {
+            report($e);
+        }
+
         return $response;
     }
-    
+
     /**
      * @param string $routeName
      * @param string $method
@@ -74,7 +79,7 @@ class RequestPerRoute
             ]
         );
     }
-    
+
     /**
      * @param string $routeName
      * @param string $method
@@ -86,11 +91,11 @@ class RequestPerRoute
     private function requestLatencyMetric(string $routeName, string $method, int $status, int $duration)
     {
         $bucketsPerRoute = null;
-        
+
         if ($bucketsPerRouteConfig = config('prometheus-exporter.buckets_per_route')) {
             $bucketsPerRoute = array_get($bucketsPerRouteConfig, $routeName);
         }
-        
+
         $this->prometheusExporter->setHistogram(
             'requests_latency_milliseconds',
             'duration of requests',
